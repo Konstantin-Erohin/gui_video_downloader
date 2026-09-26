@@ -1,0 +1,30 @@
+# Локальное окружение Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Сборка PyInstaller
+/build/
+/dist/
+*.spec
+
+# Локальные бинарники и источники FFmpeg
+/bin/*
+!/bin/README.md
+/ffmpeg-*/
+/ffmpeg-*.tar.*
+/ffmpeg-*.zip
+/ffprobe-*.zip
+
+# Файлы ОС и незавершённые загрузки
+.DS_Store
+Thumbs.db
+*.part
+*.ytdl
+
+# Локальные настройки и секреты
+.env
+.env.*
+!.env.example

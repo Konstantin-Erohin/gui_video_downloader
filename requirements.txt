@@ -1,0 +1,2 @@
+# Python 3.10+. Install with -U to get current site extractors.
+yt-dlp[default]
