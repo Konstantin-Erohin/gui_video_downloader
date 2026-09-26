@@ -15,6 +15,18 @@ class App(tk.Tk):
 
         # Создаём главное окно; ниже задаём его заголовок и размеры.
         super().__init__()
+
+        # Иконка окна Tkinter.
+        # При обычном запуске берём PNG из папки проекта.
+        # В PyInstaller-сборке — из временной папки _MEIPASS.
+        if getattr(sys, 'frozen', False):
+            icon_path = Path(sys._MEIPASS) / 'assets' / 'icon.png'
+        else:
+            icon_path = Path(__file__).resolve().parent / 'assets' / 'icon.png'
+
+        self.app_icon = tk.PhotoImage(file=icon_path)
+        self.iconphoto(True, self.app_icon)
+        
         self.title('Video Downloader')
         self.geometry('730x420')
         self.minsize(600, 400)

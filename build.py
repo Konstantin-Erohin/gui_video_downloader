@@ -16,10 +16,14 @@ def main():
 
     # Выбираем расширения бинарников и формат иконки для текущей ОС.
     icon = root / 'assets' / ('icon.ico' if sys.platform == 'win32' else 'icon.icns')
+    window_icon = root / 'assets' / 'icon.png'
 
     # Проверяем наличие иконки приложения.
     if not icon.is_file():
         raise SystemExit(f'Не найдена иконка {icon}.')
+
+    if not window_icon.is_file():
+        raise SystemExit(f'Не найдена иконка {window_icon}.')
 
     # Включаем FFmpeg и ffprobe из bin; проверяем наличие и возможность запуска.
     suffix = '.exe' if sys.platform == 'win32' else ''
@@ -56,6 +60,8 @@ def main():
         name,
         '--icon',
         str(icon),
+        '--add-data',
+        f'{window_icon}:assets',
         '--collect-all',
         'yt_dlp'
     ]
