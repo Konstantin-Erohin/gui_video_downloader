@@ -56,7 +56,7 @@ class App(tk.Tk):
         ttk.Label(body, textvariable=self.title_text, wraplength=660).grid(row=2, column=0, columnspan=2, sticky='w')
 
         # Блок качества. Список включается после успешного получения форматов.
-        ttk.Label(body, text='Качество (максимальная высота)').grid(row=3, column=0, sticky='w', pady=(12, 4))
+        ttk.Label(body, text='Качество (по дефолту максимальное)').grid(row=3, column=0, sticky='w', pady=(12, 4))
         self.combo = ttk.Combobox(body, textvariable=self.quality, state='disabled', width=18)
         self.combo.grid(row=4, column=0, sticky='w')
 
@@ -168,9 +168,9 @@ class App(tk.Tk):
         if not self.folder.get().strip():
             messagebox.showerror('Папка', 'Выберите папку сохранения.', parent=self)
             return
-        height = int(self.quality.get().removesuffix('p'))
-        self.status.set(f'Подготовка скачивания до {height}p…')
-        self.launch(download_video, self.inspected_url, height, self.folder.get().strip())
+        quality = int(self.quality.get().removesuffix('p'))
+        self.status.set(f'Подготовка скачивания {quality}p…')
+        self.launch(download_video, self.inspected_url, quality, self.folder.get().strip())
 
     # Обрабатываем события в главном потоке, где разрешено обновлять виджеты.
     def poll(self):
@@ -205,10 +205,10 @@ class App(tk.Tk):
                 self.bar.configure(mode='determinate', value=0)
                 if kind == 'inspected':
                     self.inspected_url = self.url.get().strip()
-                    values = [f'{h}p' for h in value['heights']]
+                    values = [f'{q}p' for q in value['qualities']]
                     self.combo.configure(values=values)
                     self.quality.set(values[-1])
-                    self.title_text.set(value['title'])
+                    self.title_text.set(f"Название видео: {value['title']}")
                     self.status.set('Выберите качество и нажмите «Скачать».')
                 elif kind == 'downloaded':
                     self.bar.configure(value=100)
