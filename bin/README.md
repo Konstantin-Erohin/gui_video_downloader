@@ -46,7 +46,7 @@ Windows → x64 (Intel/AMD)
 Готовые комплекты для macOS Apple Silicon и Windows x64 можно скачать с Google Drive:
 
 **Google Drive:**  
-`[ВСТАВИТЬ ССЫЛКУ НА GOOGLE DRIVE]`
+`https://drive.google.com/drive/folders/1NIN4KmOYF3LU_Nzp808dwdH6PUnt6LSj?usp=share_link`
 
 После скачивания соответствующие файлы необходимо поместить в эту папку.
 
