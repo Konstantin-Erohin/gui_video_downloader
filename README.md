@@ -283,7 +283,7 @@ requirements-build.txt
 Готовые бинарники для поддерживаемых платформ можно скачать здесь:
 
 **Google Drive:**  
-`[ВСТАВИТЬ ССЫЛКУ НА GOOGLE DRIVE]`
+`https://drive.google.com/drive/folders/1NIN4KmOYF3LU_Nzp808dwdH6PUnt6LSj?usp=share_link`
 
 Доступны два комплекта:
 
