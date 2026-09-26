@@ -19,13 +19,18 @@ class App(tk.Tk):
         # Иконка окна Tkinter.
         # При обычном запуске берём PNG из папки проекта.
         # В PyInstaller-сборке — из временной папки _MEIPASS.
-        if getattr(sys, 'frozen', False):
-            icon_path = Path(sys._MEIPASS) / 'assets' / 'icon.png'
-        else:
-            icon_path = Path(__file__).resolve().parent / 'assets' / 'icon.png'
 
-        self.app_icon = tk.PhotoImage(file=icon_path)
-        self.iconphoto(True, self.app_icon)
+        # На Windows задаём иконку окна Tkinter через PNG.
+        # На macOS иконкой приложения управляет .app через icon.icns.
+        # Без этого на macOS иконка отображается неправильно через пару секунд после старта приложения.
+        if sys.platform == 'win32':
+            if getattr(sys, 'frozen', False):
+                icon_path = Path(sys._MEIPASS) / 'assets' / 'icon.png'
+            else:
+                icon_path = Path(__file__).resolve().parent / 'assets' / 'icon.png'
+
+            self.app_icon = tk.PhotoImage(file=icon_path)
+            self.iconphoto(True, self.app_icon)
         
         self.title('Video Downloader')
         self.geometry('730x420')
@@ -200,7 +205,7 @@ class App(tk.Tk):
                 if percent is not None:
                     self.bar.stop()
                     self.bar.configure(mode='determinate', value=percent)
-                    text += f' · {percent:.1f}% потока'
+                    text += f' · {percent:.1f}% загружено'
                 elif self.bar['mode'] != 'indeterminate':
                     self.bar.configure(mode='indeterminate')
                     self.bar.start(12)
