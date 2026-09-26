@@ -14,6 +14,13 @@ def main():
     if sys.platform not in ('win32', 'darwin'):
         raise SystemExit('Сборка поддерживается на Windows и macOS.')
 
+    # Выбираем расширения бинарников и формат иконки для текущей ОС.
+    icon = root / 'assets' / ('icon.ico' if sys.platform == 'win32' else 'icon.icns')
+
+    # Проверяем наличие иконки приложения.
+    if not icon.is_file():
+        raise SystemExit(f'Не найдена иконка {icon}.')
+
     # Включаем FFmpeg и ffprobe из bin; проверяем наличие и возможность запуска.
     suffix = '.exe' if sys.platform == 'win32' else ''
     binaries = [root / 'bin' / (name + suffix) for name in ('ffmpeg', 'ffprobe')]
@@ -27,14 +34,31 @@ def main():
     # Имя результата содержит ОС и архитектуру используемого Python.
     name = 'VideoDownloader-' + ('Windows' if sys.platform == 'win32' else 'macOS')
     arch = platform.machine().lower()
-    arch = {'amd64': 'x64', 'x86_64': 'x64', 'aarch64': 'arm64'}.get(arch, arch)
+    arch = {
+        'amd64': 'x64',
+        'x86_64': 'x64',
+        'aarch64': 'arm64'
+    }.get(arch, arch)
     name += '-' + arch
 
-    # Запускаем PyInstaller тем же Python. Windows получает один EXE, macOS — пакет .app.
+    # Запускаем PyInstaller тем же Python.
+    # Windows получает один EXE, macOS — пакет .app.
     # collect-all включает динамически загружаемые модули и ресурсы yt-dlp.
-    cmd = [sys.executable, '-m', 'PyInstaller', '--noconfirm', '--clean', '--windowed',
-           '--onefile' if sys.platform == 'win32' else '--onedir', '--name', name,
-           '--collect-all', 'yt_dlp']
+    cmd = [
+        sys.executable,
+        '-m',
+        'PyInstaller',
+        '--noconfirm',
+        '--clean',
+        '--windowed',
+        '--onefile' if sys.platform == 'win32' else '--onedir',
+        '--name',
+        name,
+        '--icon',
+        str(icon),
+        '--collect-all',
+        'yt_dlp'
+    ]
 
     # При наличии добавляем JS-компоненты yt-dlp для обработки YouTube.
     if importlib.util.find_spec('yt_dlp_ejs'):
