@@ -181,7 +181,7 @@ macOS — после размещения самостоятельно собр�
 cd ~/projects/tk_downloader
 source .venv/bin/activate
 python -m pip install -U -r requirements-build.txt
-chmod +x bin/ffmpeg bin/ffprobe
+chmod +x bin/ffmpeg bin/ffprobe bin/deno
 python build.py
 ```
 
